@@ -21,14 +21,11 @@ def nodes(g, v, ro):
     """
 
     for _, data in g.nodes(data=True):
-        # Preference density function.
-        x = [int(uniform() * 10000) for _ in v]
-
-        w = {v: x[i] / sum(x) for i, v in enumerate(v)}
+        w = {v: int(uniform() * 10000) for v in v}
+        w = {v: w[v] / sum(w.values()) for v in v}
         w = function(w)
 
-        data['w'] = w
-
+        data['w'] = w  # Preference density function.
         data['ro'] = ro()  # Impulsiveness indicator.
         data['d'] = decision(v, data['w'], data['ro'])  # Initial decision.
 
@@ -48,7 +45,7 @@ def edges(g, a):
 
     Examples:
         edges(g, a=lambda: 0.5)
-        edges(g, a=lambda: uniform(0.3, 0.7)
+        edges(g, a=lambda: uniform(0.3, 0.7))
     """
 
     for _, _, data in g.edges(data=True):
