@@ -35,10 +35,10 @@ def everything(i, g, v):
 
     for m, data in g.nodes(data=True):
         mw = data['w']
-        mro = data['ro']
+        mrho = data['rho']
 
         print('   ', m,
               {v: mw(v) for v in v},
-              {j: decision_probability(j, v, mw, mro) for j in v.union({0})})
+              {j: decision_probability(j, v, mw, mrho) for j in v.union({0})})
 
     print()

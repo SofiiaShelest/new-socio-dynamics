@@ -12,8 +12,8 @@ def main(**kwargs):
 
     g = nx.newman_watts_strogatz_graph(500, k=10, p=0.7)
 
-    initialise.nodes(g, v, ro=lambda: 25)
     initialise.edges(g, a=lambda: 0.3)
+    initialise.nodes(g, v, rho=lambda: 25)
 
     # Main cycle.
     for i in range(n):
