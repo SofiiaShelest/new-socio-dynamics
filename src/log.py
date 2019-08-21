@@ -1,5 +1,3 @@
-from formulae import decision_probability
-
 
 def nothing(i, g, v):
     """ Logs nothing. """
@@ -24,6 +22,8 @@ def average(i, g, v):
 
 def everything(i, g, v):
     """ Logs average density and density of each member. """
+
+    from formulae import decision_probability
 
     m = g.nodes                                           # Members.
     w = {m: g.nodes[m]['w'] for m in m}                   # Densities.

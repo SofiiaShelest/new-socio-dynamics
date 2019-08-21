@@ -1,15 +1,16 @@
 import matplotlib.pyplot as plt
 
 
-def occupation_measures(m, colours=None):
-    """
-    Plots occupation measures.
+def lines(m, colours=None):
+    """ Draws multiple plots.
 
-    :param m: Computed occupation measures ({j: measure[i]}, `j` from V + {0}).
-    :param colours: Dictionary of colours for `j` from V + {0}.
+    :param m: Dictionary of lines to draw ({x: line}).
+    :param colours: Dictionary of colours ({x: colour}).
     """
 
     colours = colours or {}
+
+    plt.figure()
 
     for j in m:
         if j in colours:
@@ -19,8 +20,6 @@ def occupation_measures(m, colours=None):
 
 
 def show():
-    """
-    Shows drawn plots.
-    """
+    """ Shows drawn plots. """
 
     plt.show()

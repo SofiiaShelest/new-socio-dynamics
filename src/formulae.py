@@ -128,3 +128,24 @@ def occupation_measure(g, j):
     d = lambda n: g.nodes[n]['d']  # Decision of a member `n`.
 
     return (1 / len(m)) * sum(d(m) == j for m in m)
+
+
+def cesaro(xs):
+    """ Computes the Cesàro summation of the `xs`.
+
+    :param xs: Sequence of numbers.
+    :return: Cesàro summation.
+    """
+
+    result = []
+
+    s = 0
+    n = 0
+
+    for x in xs:
+        s += x
+        n += 1
+
+        result.append(s / n)
+
+    return result
