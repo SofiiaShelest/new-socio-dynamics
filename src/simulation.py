@@ -81,4 +81,4 @@ def iteration(g, v):
         cached = functools.lru_cache(maxsize=len(v))
 
         data['w'] = cached(average_density(m, i, w))
-        data['d'] = decision(v, data['w'], data['ro'])
+        data['d'] = decision(v, data['w'], data['rho'])

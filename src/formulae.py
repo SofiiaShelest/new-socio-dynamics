@@ -21,45 +21,45 @@ def normalised_entropy(v, w):
     return (-1 / log(m)) * sum(w(v) * log(w(v)) for v in v)
 
 
-def decision_probability(j, v, w, ro):
+def decision_probability(j, v, w, rho):
     """
     Computes the probability of a vote `j` to be a decision of a member.
 
     :param j: Vote from `V + {0}`.
     :param v: Set of votes `V` (excluding 0).
     :param w: Preference density function.
-    :param ro: Impulsiveness indicator.
+    :param rho: Impulsiveness indicator.
     :return: Probability from range [0, 1].
     """
 
     assert j == 0 or j in v
     assert 0 not in v
-    assert ro > 0
+    assert rho > 0
 
     h = normalised_entropy
 
     if j == 0:
-        return h(v, w) ** ro
+        return h(v, w) ** rho
     else:
-        return (1 - h(v, w) ** ro) * w(j)
+        return (1 - h(v, w) ** rho) * w(j)
 
 
-def decision(v, w, ro):
+def decision(v, w, rho):
     """
     Computes the decision of a member during a communication
     depending on a preference density function `w`.
 
     :param v: Set of votes `V` (excluding 0).
     :param w: Preference density function.
-    :param ro: Impulsiveness indicator.
+    :param rho: Impulsiveness indicator.
     :return: Decision of the member.
     """
 
     assert 0 not in v
-    assert ro > 0
+    assert rho > 0
 
     v = list(v)  # Fix the order.
-    p = [decision_probability(j, v, w, ro) for j in v + [0]]
+    p = [decision_probability(j, v, w, rho) for j in v + [0]]
 
     return numpy.random.choice(v + [0], p=p)
 
@@ -128,3 +128,24 @@ def occupation_measure(g, j):
     d = lambda n: g.nodes[n]['d']  # Decision of a member `n`.
 
     return (1 / len(m)) * sum(d(m) == j for m in m)
+
+
+def cesaro(xs):
+    """ Computes the Cesàro summation of the `xs`.
+
+    :param xs: Sequence of numbers.
+    :return: Cesàro summation.
+    """
+
+    result = []
+
+    s = 0
+    n = 0
+
+    for x in xs:
+        s += x
+        n += 1
+
+        result.append(s / n)
+
+    return result

@@ -4,20 +4,20 @@ from common import function
 from formulae import decision
 
 
-def nodes(g, v, ro):
+def nodes(g, v, rho):
     """
     Initialises attributes of the nodes of the graph `g`:
         - 'w' for preference density function;
         - 'd' for initial decision of a member;
-        - 'ro' for impulsiveness indicator.
+        - 'rho' for impulsiveness indicator.
 
     :param g: Graph.
     :param v: Set of votes `V` (excluding 0).
-    :param c: Function that returns impulsiveness indicator.
+    :param rho: Function that returns impulsiveness indicator.
 
     Examples:
-        nodes(g, v, ro=lambda: 25)
-        nodes(g, v, ro=lambda: uniform(20, 30))
+        nodes(g, v, rho=lambda: 25)
+        nodes(g, v, rho=lambda: uniform(20, 30))
     """
 
     for _, data in g.nodes(data=True):
@@ -26,11 +26,12 @@ def nodes(g, v, ro):
         w = function(w)
 
         data['w'] = w  # Preference density function.
-        data['ro'] = ro()  # Impulsiveness indicator.
-        data['d'] = decision(v, data['w'], data['ro'])  # Initial decision.
+        data['rho'] = rho()  # Impulsiveness indicator.
+        data['d'] = decision(v, data['w'], data['rho'])  # Initial decision.
 
         assert sum(w(v) for v in v) == 1
-        assert data['ro'] > 0
+        assert all(w(v) > 0 for v in v)
+        assert data['rho'] > 0
         assert data['d'] == 0 or data['d'] in v
 
 
