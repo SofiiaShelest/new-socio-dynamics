@@ -63,14 +63,14 @@ def edges(g, a):
         assert 0 <= data['a'] <= 1
 
 
-def leader(g, v, m, j, r):
-    """ TODO.
+def leader(g, v, m, j):
+    """
+    Makes one member to be a leader.
 
-    :param g:
-    :param v:
-    :param m:
-    :param j:
-    :param r:
+    :param g: Graph.
+    :param v: Set of votes `V` (excluding 0).
+    :param m: The node that will become a leader.
+    :param j: Vote of the leader.
     :return:
     """
 
@@ -83,12 +83,12 @@ def leader(g, v, m, j, r):
     data['d'] = decision(v, data['w'], data['rho'])  # Initial decision.
 
     for n in g.neighbors(m):
-        x = r()
+        r = uniform(0, 0.5)
 
         data = g.edges[m, n]
         data['d'] = {       # Dialogue matrix.
-            (0, 0): x,
-            (0, 1): 1 - x,
+            (0, 0): r,
+            (0, 1): 1 - r,
             (1, 0): 0,
             (1, 1): 0,
         }

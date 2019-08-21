@@ -18,7 +18,7 @@ def main(**kwargs):
 
     initialise.nodes(g, v, rho=lambda: 1)
     initialise.edges(g, a=lambda: 1.0)
-    initialise.leader(g, v, m=0, j=-1, r=lambda: uniform(0, 0.5))
+    initialise.leader(g, v, m=0, j=-1)
 
     measures = {j: [] for j in v.union({0})}
     
