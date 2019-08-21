@@ -13,7 +13,7 @@ def nodes(g, v, ro):
 
     :param g: Graph.
     :param v: Set of votes `V` (excluding 0).
-    :param ro: Function that returns impulsiveness indicator.
+    :param c: Function that returns impulsiveness indicator.
 
     Examples:
         nodes(g, v, ro=lambda: 25)
@@ -60,3 +60,24 @@ def edges(g, a):
         }
 
         assert 0 <= data['a'] <= 1
+
+
+def leader(g, m, r):
+    """
+
+    :param g:
+    :param m:
+    :param r:
+    :return:
+    """
+
+    for n in g.neighbors(m):
+        x = r()
+
+        data = g.edges[m, n]
+        data['d'] = {       # Dialogue matrix.
+            (0, 0): x,
+            (0, 1): 1 - x,
+            (1, 0): 0,
+            (1, 1): 0,
+        }

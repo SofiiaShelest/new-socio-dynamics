@@ -1,4 +1,6 @@
 import networkx as nx
+from numpy.random.mtrand import uniform
+
 import initialise
 import log
 import simulation
@@ -10,10 +12,11 @@ def main(**kwargs):
     v = {-1, +1}  # Set of votes.
     n = 300       # Number of iterations.
 
-    g = nx.newman_watts_strogatz_graph(500, k=10, p=0.7)
+    g = nx.complete_graph(50)
 
-    initialise.nodes(g, v, ro=lambda: 25)
-    initialise.edges(g, a=lambda: 0.3)
+    initialise.nodes(g, v, ro=lambda: 1)
+    initialise.edges(g, a=lambda: 1.0)
+    initialise.leader(g, 0, r=uniform(0, 0.5))
 
     # Main cycle.
     for i in range(n):
