@@ -65,13 +65,12 @@ def edges(g, a):
 
 def leader(g, v, m, j):
     """
-    Makes one member to be a leader.
+    Makes a leader out of the member.
 
     :param g: Graph.
     :param v: Set of votes `V` (excluding 0).
     :param m: The node that will become a leader.
     :param j: Vote of the leader.
-    :return:
     """
 
     w = {v: uniform(0.001, 0.002) for v in v}
