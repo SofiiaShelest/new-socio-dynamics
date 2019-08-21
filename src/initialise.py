@@ -63,14 +63,24 @@ def edges(g, a):
         assert 0 <= data['a'] <= 1
 
 
-def leader(g, m, r):
-    """
+def leader(g, v, m, j, r):
+    """ TODO.
 
     :param g:
+    :param v:
     :param m:
+    :param j:
     :param r:
     :return:
     """
+
+    w = {v: uniform(0.001, 0.002) for v in v}
+    w[j] = 1 - sum(w.values()) + w[j]
+    w = function(w)
+
+    data = g.nodes[m]
+    data['w'] = w  # Preference density function.
+    data['d'] = decision(v, data['w'], data['rho'])  # Initial decision.
 
     for n in g.neighbors(m):
         x = r()

@@ -12,13 +12,13 @@ from common import measure
 
 def main(**kwargs):
     v = {-1, +1}  # Set of votes.
-    n = 300       # Number of iterations.
+    n = 1000      # Number of iterations.
 
     g = nx.complete_graph(50)
 
     initialise.nodes(g, v, rho=lambda: 1)
     initialise.edges(g, a=lambda: 1.0)
-    initialise.leader(g, 0, r=uniform(0, 0.5))
+    initialise.leader(g, v, m=0, j=-1, r=lambda: uniform(0, 0.5))
 
     measures = {j: [] for j in v.union({0})}
     
@@ -46,7 +46,7 @@ def main(**kwargs):
 
 if __name__ == '__main__':
     # Run `main` and measure its execution time.
-    elapsed = measure(lambda: main(log=log.iteration, plot=True))
+    elapsed = measure(lambda: main(log=log.everything, plot=True))
 
     print()
     print('Elapsed:', elapsed, 'seconds.')
