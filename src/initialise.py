@@ -29,7 +29,9 @@ def nodes(g, v, rho):
         data['rho'] = rho()  # Impulsiveness indicator.
         data['d'] = decision(v, data['w'], data['rho'])  # Initial decision.
 
-        assert sum(w(v) for v in v) == 1
+        precision = 1e-7
+
+        assert abs(sum(w(v) for v in v) - 1) <= precision, str({v: w(v) for v in v})
         assert all(w(v) > 0 for v in v)
         assert data['rho'] > 0
         assert data['d'] == 0 or data['d'] in v
@@ -63,7 +65,7 @@ def edges(g, a):
         assert 0 <= data['a'] <= 1
 
 
-def leader(g, v, m, j):
+def leader(g, v, m, j, a=lambda: 1.0):
     """
     Makes a leader out of the member.
 
@@ -71,6 +73,7 @@ def leader(g, v, m, j):
     :param v: Set of votes `V` (excluding 0).
     :param m: The node that will become a leader.
     :param j: Vote of the leader.
+    :param a: Channel activation function.
     """
 
     w = {v: uniform(0.001, 0.002) for v in v}
@@ -85,6 +88,7 @@ def leader(g, v, m, j):
         r = uniform(0, 0.5)
 
         data = g.edges[m, n]
+        data['a'] = a()     # Activation ratio.
         data['d'] = {       # Dialogue matrix.
             (0, 0): r,
             (0, 1): 1 - r,

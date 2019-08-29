@@ -1,24 +1,17 @@
-import networkx as nx
-from numpy.random.mtrand import uniform
-
-import initialise
 import log
 import plot
 import simulation
 import formulae
 
 from common import measure
+from experiments import three_leaders
 
 
 def main(**kwargs):
-    v = {-1, +1}  # Set of votes.
-    n = 1000      # Number of iterations.
+    v = {-1, +1, +2}  # Set of votes.
+    n = 5000      # Number of iterations.
 
-    g = nx.complete_graph(50)
-
-    initialise.nodes(g, v, rho=lambda: 1)
-    initialise.edges(g, a=lambda: 1.0)
-    initialise.leader(g, v, m=0, j=-1)
+    g = three_leaders(v)
 
     measures = {j: [] for j in v.union({0})}
     
@@ -35,7 +28,7 @@ def main(**kwargs):
 
     # Plot.
     if kwargs.get('plot', False):
-        colours = {-1: 'r', 0: 'g', +1: 'b'}
+        colours = {-1: 'r', 0: 'g', +1: 'b', +2: 'y'}
         cesaro = {x: formulae.cesaro(y) for x, y in measures.items()}
 
         plot.lines(measures, colours)
